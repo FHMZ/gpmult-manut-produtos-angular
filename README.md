@@ -1,0 +1,1 @@
+# gpmult-manut-produtos-client-fe
