@@ -1,0 +1,24 @@
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: none;
+}
+
+.close {
+    font-size: 1.5rem;
+}
+
+.close:hover {
+    font-size: 1.7rem;
+}
+
+.text-info, .text-invalid {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.text-invalid {
+    color: red !important;
+}

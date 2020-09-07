@@ -1,0 +1,80 @@
+<div id="alert"
+    class="alert alert-dismissible {{ actionId == 1 ? 'alert-success' : actionId == 2 ? 'alert-primary' : 'alert-danger' }} shadow-ps"
+    *ngIf="messageCode != 0">
+    <button type="button" class="close" (click)="closeMessage()">&times;</button>
+    {{ message }}
+</div>
+<div class="card bg-light mb-3 shadow-ps">
+    <div class="card-header">
+        <strong>Manutenção de Produtos</strong>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Pesquisar</h4>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar por código"
+                            autofocus="true" (keyup)="filterProducts($event)">
+                        <span class="input-group-addon pointer">
+                            <button type="button" class="btn btn-sm bg-primary text-white" data-toggle="modal"
+                                data-target="#product-modal" style="margin-top: 13px;" title="Pesquisar"
+                                (click)="showModal(null, 1)">
+                                <i class="fas fa-plus"></i> Novo
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="border-bottom: 2px solid #ddd;">
+                            <thead class="bg-whitesmoke">
+                                <tr>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Valor (R$)</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let objProduct of products | paginate: { itemsPerPage: 5, currentPage: page }" id="prod-{{objProduct.id}}">
+                                    <td><strong>{{ objProduct.id }}</strong></td>
+                                    <td style="min-width: 180px;">{{ objProduct.name }}</td>
+                                    <td style="min-width: 150px;">
+                                        {{ objProduct.categoryCode == 1 ? 'Perecível' : 'Não Perecível' }}</td>
+                                    <td style="max-width: 150px;min-width: 130px;">
+                                        R$ {{ objProduct.value }}</td>
+                                    <td style="max-width: 120px;min-width: 120px;" class="text-center">
+                                        <button type="button" class="btn btn-sm bg-primary text-white"
+                                            data-toggle="modal" data-target="#product-modal" title="Editar"
+                                            (click)="showModal(objProduct, 2)">
+                                            <i class="fas fa-pen"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm bg-info text-white"
+                                            style="margin-left: 5px;" title="Consultar" data-toggle="modal"
+                                            data-target="#product-modal" (click)="showModal(objProduct, 4)">
+                                            <i class="fab fa-readme"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm bg-danger text-white"
+                                            data-toggle="modal" data-target="#product-modal" style="margin-left: 5px;"
+                                            title="Deletar" (click)="showModal(objProduct, 3)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-product-modal [product]="product" (alert)="showAlertMessage($event)" actionId="{{ actionId }}">
+</app-product-modal>

@@ -1,0 +1,86 @@
+<div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{ actionId == 1 ? 'Novo' : actionId == 2 ? 'Editar' : actionId == 3 ? 'Excluir' : 'Consultar' }}
+                    Produto
+                </h5>
+                <button #buttonClose type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="actionId != 3">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm bold">Código</label>
+                                <input type="text" placeholder="Código" class="form-control" value="{{ product.id }}"
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm bold">Nome</label>
+                                <input type="text" placeholder="Descrição" class="form-control"
+                                    [(ngModel)]="product.name" name="product.name"
+                                    [readonly]="actionId == 2 || actionId == 4" maxlength="100">
+                                <div class="text-invalid" [hidden]="!isNameError">
+                                    Nome incorreto
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm bold">Categoria</label>
+                                <select class="custom-select" maxlength="50" [(ngModel)]="product.categoryCode"
+                                    name="product.categoryId" [hidden]="actionId == 4">
+                                    <option>Selecione</option>
+                                    <option *ngFor="let categoria of categorias" value="{{ categoria.id }}">
+                                        {{ categoria.id }} - {{ categoria.description }}
+                                    </option>
+                                </select>
+                                <input type="text" class="form-control" [hidden]="actionId != 4"
+                                    value="{{ product.categoryCode == '1' ? '1 - Perecível' : '2 - Não Perecível' }}" readonly>
+                                <div class="text-invalid" [hidden]="!isCategoryError">
+                                    Categoria incorreta
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm bold">Valor (R$)</label>
+                                <input type="text" placeholder="R$" class="form-control" [(ngModel)]="product.value"
+                                    (keyup)="formatValue(product.value)" name="product.value" maxlength="30" [readonly]="actionId == 4">
+                                <div class="text-invalid" [hidden]="!isValueError">
+                                    Valor incorreto
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="actionId == 3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <strong>Deseja realmente excluir o produto: {{ product.name }} ?</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="cancel()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" (click)="save()"
+                        [hidden]="actionId == 4 || actionId == 3">Salvar
+                    </button>
+                    <button type="submit" class="btn btn-danger" (click)="delete()"
+                        [hidden]="actionId != 3">Deletar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar
+    <div class="bg-light shadow-ps" id="sidebar-wrapper">
+        <div class="sidebar-heading bg-green-hdi pointer" (click)="toggledSideMenu($event)">
+            <strong>Filtros</strong>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-light" routerLink="/main/data">
+                <i class="fab fa-buffer icon-sidebar"></i>
+                <a><strong>Todos os Registros</strong></a>
+            </li>
+        </ul>
+    </div>
+    /#sidebar-wrapper -->
+    <!-- navbar -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-dark bg-primary shadow-ps">
+            <div class="navbar-header">
+                <a class="navbar-brand pointer">
+                    <i class="fab fa-angular icon-navbar text-white" style="font-size: 26px;"></i>
+                    GRUPO MULT
+                </a>
+            </div>
+        </nav>
+        <fieldset class="col-md-12 content">
+            <router-outlet></router-outlet>
+        </fieldset>
+    </div>
+    <!-- navbar -->
+</div>
+<!-- wrapper -->
