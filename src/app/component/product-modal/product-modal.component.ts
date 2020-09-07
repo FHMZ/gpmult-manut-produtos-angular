@@ -103,18 +103,10 @@ export class ProductModalComponent implements OnInit {
   }
 
   formatValue(price) {
-    this.product.value = '';
-    if (this.isNull(price)) {
-      this.product.value = '0,00'; return;
-    }
-    if (price.length == 2) {
-      this.product.value = price.replace(",", "") + ',';
-      return;
-    }
-    if (price.length == 6) {
-      this.product.value = price.replace(",", ".") + ',';
-      return;
-    }
+    price = price.replace(/\D/g, '')
+    price = price.replace(/(\d{1})(\d{1,2})$/, "$1,$2")
+    price = price.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    price = price.replace(/^(\d)/g, "$1")
     this.product.value = price;
   }
 

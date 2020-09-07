@@ -51,11 +51,11 @@ export class ProductTableComponent implements OnInit {
     this.loadGrid();
   }
 
-  filterProducts(event) {
+  findAllByCategoryOrName(event) {
     console.log('#### Filter Products');
     console.log(event.target.value);
-    if (this.isNumeric(event.target.value) && event.target.value != '') {
-      this.loadGridById(parseInt(event.target.value));
+    if (event.target.value != '') {
+      this.loadGridByCategoryOrName(event.target.value);
     } else {
       this.loadGrid();
     }
@@ -82,12 +82,12 @@ export class ProductTableComponent implements OnInit {
     });
   }
 
-  loadGridById(id) {
-    this.service.findAllById(id).subscribe((res: any) => {
+  loadGridByCategoryOrName(param) {
+    this.service.findAllByCategoryOrName(param).subscribe((res: any) => {
       this.products = [];
       if (res != null) {
         console.log(res);
-        this.products.push(res);
+        this.products = res;
       }
     }, error => {
       console.log(error);
