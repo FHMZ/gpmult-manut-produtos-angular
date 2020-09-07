@@ -29,4 +29,8 @@ export class ProductService {
         return this.http.get(`${this.baseUri}`);
     }
 
+    findAllById(id: number): Observable<any> {
+        return this.http.get(`${this.baseUri}/product/${id}`);
+    }
+
 }

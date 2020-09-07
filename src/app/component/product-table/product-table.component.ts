@@ -54,9 +54,8 @@ export class ProductTableComponent implements OnInit {
   filterProducts(event) {
     console.log('#### Filter Products');
     console.log(event.target.value);
-    let listAux = this.products;
     if (this.isNumeric(event.target.value) && event.target.value != '') {
-      this.products = listAux.filter(p => { return p.id == event.target.value; });
+      this.loadGridById(parseInt(event.target.value));
     } else {
       this.loadGrid();
     }
@@ -75,6 +74,21 @@ export class ProductTableComponent implements OnInit {
     this.service.findAll().subscribe((res: any) => {
       console.log(res);
       this.products = res;
+    }, error => {
+      console.log(error);
+      this.actionId = 3;
+      this.messageCode = 3;
+      this.message = "Error: " + error.message;
+    });
+  }
+
+  loadGridById(id) {
+    this.service.findAllById(id).subscribe((res: any) => {
+      this.products = [];
+      if (res != null) {
+        console.log(res);
+        this.products.push(res);
+      }
     }, error => {
       console.log(error);
       this.actionId = 3;
