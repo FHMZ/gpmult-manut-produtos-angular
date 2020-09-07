@@ -1,6 +1,7 @@
 import { ProductService } from './../../service/product.service';
 import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Product } from '../../model/product.model';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-modal',
@@ -101,13 +102,20 @@ export class ProductModalComponent implements OnInit {
     this.showMessage.msg = "Error: " + error.message;
   }
 
-  formatValue(value) {
-    // let num = parseFloat(value);
-    // if (this.isNull(value)) {
-    //   return;
-    // }
-    // console.log(num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-    // this.product.value = num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  formatValue(price) {
+    this.product.value = '';
+    if (this.isNull(price)) {
+      this.product.value = '0,00'; return;
+    }
+    if (price.length == 2) {
+      this.product.value = price.replace(",", "") + ',';
+      return;
+    }
+    if (price.length == 6) {
+      this.product.value = price.replace(",", ".") + ',';
+      return;
+    }
+    this.product.value = price;
   }
 
   validateFields() {
@@ -134,6 +142,10 @@ export class ProductModalComponent implements OnInit {
 
   isNull(value) {
     return value == null || value == "" || value == 'undefined'
+  }
+
+  isNumeric(param) {
+    return !isNaN(param);
   }
 
 }
