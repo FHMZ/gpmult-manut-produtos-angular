@@ -1,1 +1,2 @@
-# gpmult-manut-produtos-client-fe
+# gpmult-manut-produtos-angular
+Project developed with Angular 8
